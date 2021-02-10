@@ -1,51 +1,31 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import icon from '../assets/icon.svg';
+import { HashRouter as Router, Switch, Route } from 'react-router-dom';
+import ApolloProvider from './ApolloProvider.tsx';
+import { Container, Row, Col } from 'react-bootstrap';
+import styled from 'styled-components';
+import './App.scss';
 import './App.global.css';
-
-const Hello = () => {
-  return (
-    <div>
-      <div className="Hello">
-        <img width="200px" alt="icon" src={icon} />
-      </div>
-      <h1>electron-react-boilerplate</h1>
-      <div className="Hello">
-        <a
-          href="https://electron-react-boilerplate.js.org/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="books">
-              📚
-            </span>
-            Read our docs
-          </button>
-        </a>
-        <a
-          href="https://github.com/sponsors/electron-react-boilerplate"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="books">
-              🙏
-            </span>
-            Donate
-          </button>
-        </a>
-      </div>
-    </div>
-  );
-};
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Home from './pages/Home';
 
 export default function App() {
   return (
-    <Router>
-      <Switch>
-        <Route path="/" component={Hello} />
-      </Switch>
-    </Router>
+    // <Router>
+    //   <Switch>
+    //     <Route path="/" component={Hello} />
+    //   </Switch>
+    // </Router>
+    <ApolloProvider>
+      <Router>
+        <Container className="pt-5">
+          <Switch>
+            <Route path="/" component={Login} exact />
+            <Route path="/register" component={Register} />
+            <Route exact path="/home" component={Home} />
+          </Switch>
+        </Container>
+      </Router>
+    </ApolloProvider>
   );
 }

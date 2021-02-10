@@ -11,7 +11,7 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
-import { app, BrowserWindow, shell } from 'electron';
+import { app, BrowserWindow, shell, Notification } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
@@ -76,7 +76,7 @@ const createWindow = async () => {
       nodeIntegration: true,
     },
   });
-
+  //메인 프로세스 https://www.electronjs.org/docs/api/synopsis
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
   // @TODO: Use 'ready-to-show' event
@@ -111,6 +111,13 @@ const createWindow = async () => {
   new AppUpdater();
 };
 
+function showNotification() {
+  const notification = {
+    title: '벤디트 관리시스템',
+    body: '벤디트 관리시스템을 실행합니다.',
+  };
+  new Notification(notification).show();
+}
 /**
  * Add event listeners...
  */
@@ -123,7 +130,7 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.whenReady().then(createWindow).catch(console.log);
+app.whenReady().then(createWindow).then(showNotification).catch(console.log);
 
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
